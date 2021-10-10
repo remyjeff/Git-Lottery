@@ -12,8 +12,10 @@ class Run:
         this.D.getIndexPlayRange()
 
 if __name__ == "__main__":
-    F = Filter("power")
-    F.commonFilter()
+    F = Filter("cash5")
+    #F.commonFilter()
+    D = Data(F.data)
+    print(D.lastNInCommon(17, 3))
     
     #R = Run()
     #T = Test("cash5")
