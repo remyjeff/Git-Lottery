@@ -15,10 +15,10 @@ class skeleton:
         this.convertToInt()
         this.sumStat = this.sumStatistic()
         print("Sum:\n", this.sumStat)
-        this.diffStat = this.diffStatistic
+        this.diffStat = this.diffStatistic()
         print("Diff:\n", this.diffStat)
         this.indexRangeValues = this.indexRange()
-        print("IndexRange:\n", this.indexRange)
+        print("IndexRange:\n", this.indexRangeValues)
         this.parityValue = this.parity()
         print("Parity:\n")
 
@@ -259,10 +259,29 @@ class skeleton:
                     print(f"Trial : {trial} current max : {maxx} Trying: {[this.percent, this.common, this.commonSeq]}")
                 print(f"Max : {maxx} length : {x} Values : {values}")
         print(f"Max : {maxx} length : {x} Values : {values}")
+    
+    def string(this, lst):
+        res = ""
+        for n in lst:
+            res += str(n)
+        return res
+    def location(this):
+        lst2 = list(combinations([x for x in range(1, this.range)], len(this.oldData[-1])))
+        lst = []
+        for i in range(len(lst2)):
+            if lst2[i][0] == 10:
+                break
+            lst.append(list(lst2[i]))
+        count = 0
+        for l in this.oldData:
+            if l in lst and lst.index(l) <= (1 * len(lst) / 1):
+                count += 1
+        print(f"Total : {count} out of {len(this.oldData)} = {count/len(this.oldData)} Diff : {len(this.oldData) - count} lst = {len(lst)}")
 
 if __name__ == "__main__":
-    s = skeleton("cash5", 36)
-    s = skeleton("4life", 49)
-    s = skeleton("lotto", 45)
+    #s = skeleton("cash5", 36)
+
+    #s = skeleton("4life", 49)
+    #s = skeleton("lotto", 45)
     s = skeleton("mega", 71)
     s = skeleton("power", 70)
