@@ -1,5 +1,5 @@
 from itertools import combinations
-from data import inCommonN
+from data import inCommonN, Data
 from read import Read, write
 from test import winners
 
@@ -7,7 +7,8 @@ class Filter:
     def __init__(this, name) -> None:
         this.name = name
         this.plays = this.getPlays()
-        this.data = Read(name).getData()
+        this.data = Read(lambda name : f"games/{name}.txt", name).getData()
+        this.Data = Data(this.data)
         this.size = len(this.data)
         this.F = this.indexRange()
 
@@ -25,7 +26,7 @@ class Filter:
         start = myStart #this.size - segment
         count = 0
         cnt = 0
-        cnt1 = 0
+        cntP = 0
         while(start >= 0):
             result = []
             interest = this.data[start]
@@ -41,20 +42,16 @@ class Filter:
                     if not state:
                         result.append(p1)
 
-
                 if winners([interest], result) == 1:
                     count += 1
-                r = this.rangeFilter(result)
-                if winners([interest], r) == 1:
+                rangeF = this.rangeFilter(result)
+                if winners([interest], rangeF) == 1:
                     cnt += 1
-                rr = this.sequense(r, start+1, 7)
-                if winners([interest], rr) == 1:
-                    cnt1 += 1
-                    write(rr, this.name)
-                print(f" Result1 = {len(result)} : Count = {count} Result2 = {len(r)} : Cnt = {cnt} : Result3 : {len(rr)} cnt1: {cnt1} {interest}")
-
-
-
+                rangePlusSeq = this.sequense(rangeF, start+1, 7)
+                if winners([interest], rangePlusSeq) == 1:
+                    cntP += 1
+                write(rangePlusSeq, this.name)
+                print(f" Result1 = {len(result)} : Count = {count} Result2 = {len(rangeF)} : Cnt = {cnt} {interest} RangePlus : {len(rangePlusSeq)} : cntP : {cntP}")
             start -= 1
         #print(count) # 2630 total
         return {"inCommon":common, "segemnt":segment, "Wins":count}
@@ -95,7 +92,7 @@ class Filter:
                 result.append(l)
         return result
 
-    def sequenseFilter(this, lst, index, segment=3):
+    def sequenseFilter(this, lst, index, segment=3): # returns true if lst shares 2 numbers in sequence with the last 3 plays!
         count = 0
         for m in this.data[index:index+segment]:
             for i in range(len(lst)):
@@ -111,5 +108,12 @@ class Filter:
         result = []
         for l in lst:
             if not this.sequenseFilter(l, index, segment):
+                result.append(l)
+        return result
+
+    def HowManyInCommonWithLastTwoFilter(this, lst, index):
+        result = []
+        for l in lst:
+            if not this.Data.HowManyInCommonWithLastTwo(index):
                 result.append(l)
         return result

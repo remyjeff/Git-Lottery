@@ -13,11 +13,4 @@ class Run:
 
 if __name__ == "__main__":
     F = Filter("cash5")
-    #F.commonFilter()
-    D = Data(F.data)
-    print(D.lastNInCommon(17, 3))
-    
-    #R = Run()
-    #T = Test("cash5")
-    #wins = T.winners(R.R.getData(), F.plays)
-    #print(f"Wins ration : {wins} / {R.D.size} = {wins/R.D.size}")
+    F.commonFilter()

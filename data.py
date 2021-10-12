@@ -135,3 +135,16 @@ class Data:
                 cnt += 1
             start -= 1
         print("cnt : ", cnt)
+
+
+    def HowManyInCommonWithLastTwo(this, index):
+        l = this.data[index+1]
+        m = this.data[index+2]
+        temp = []
+        for el in l:
+            if el not in temp:
+                temp.append(el)
+        for el in m:
+            if el not in temp:
+                temp.append(el)
+        return inCommonN(this.data[index], temp, 3)

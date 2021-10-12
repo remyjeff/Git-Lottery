@@ -24,20 +24,22 @@ def write(lst, name):
         f.close()
 
 class Read:
-    def __init__(this, fileName) -> None:
+    def __init__(this, fPath, fileName) -> None:
         this.name = fileName
+        this.fPath = fPath
         this.data = []
         this.read()
         this.convertToInt()
         this.size = len(this.data)
 
     def read(this):
-        f = open(f"games/{this.name}.txt", "r")
+        f = open(this.fPath(this.name), "r")
         lines = f.read().strip("")
         lines = lines.split('\n')
         final = []
         for line in lines:
-            li = line.split(" ")
+            if line != '':
+                li = line.split(" ")
             final.append(li)
         f.close()
         this.data = final
